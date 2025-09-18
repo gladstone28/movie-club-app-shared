@@ -1,0 +1,1 @@
+// Placeholder app.js (see README for full Firebase setup)
