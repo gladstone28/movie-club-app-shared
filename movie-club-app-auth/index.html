@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movie Club – Shared + Auth</title>
+  <meta name="description" content="Shared movie list with Firebase Auth + Firestore. Accessible and mobile-friendly." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="brand">
+      <h1 id="app-title">🎬 Movie Club (Shared + Auth)</h1>
+      <p id="app-tagline">Real-time shared movie list. Sign in to add movies.</p>
+    </div>
+
+    <div class="header-actions">
+      <div class="user-info" aria-live="polite">
+        <span id="userName" class="user-name" hidden></span>
+      </div>
+      <button id="signInBtn" class="btn" title="Sign in with Google">🔐 Sign in</button>
+      <button id="signOutBtn" class="btn" title="Sign out" hidden>🚪 Sign out</button>
+      <button id="themeBtn" class="btn" aria-pressed="false" title="Toggle theme">🌗 Theme</button>
+      <button id="reduceMotionBtn" class="btn" aria-pressed="false" title="Toggle reduced motion">🛑 Motion</button>
+    </div>
+  </header>
+
+  <main id="main" class="layout" role="main">
+    <section aria-labelledby="controls-title" class="controls card">
+      <h2 id="controls-title">Find & manage</h2>
+      <form id="searchForm" class="search-form" role="search" aria-label="Search movies">
+        <label for="query">Search</label>
+        <input id="query" name="query" type="search" inputmode="search" placeholder="Title, year, or genre…" autocomplete="off" />
+        <label for="genre">Genre</label>
+        <select id="genre" name="genre">
+          <option value="">All genres</option>
+        </select>
+        <button type="submit" class="btn primary">Search</button>
+        <button type="button" id="resetFilters" class="btn">Reset</button>
+      </form>
+
+      <div class="toolbar">
+        <button id="selectAll" class="btn" title="Select all filtered movies">Select all</button>
+        <button id="clearSelected" class="btn" title="Clear selections">Clear selections</button>
+        <button id="exportBtn" class="btn" title="Export selected to CSV">Export CSV</button>
+        <button id="seedBtn" class="btn" title="Seed the shared list with sample movies (auth required)">🌱 Seed samples</button>
+      </div>
+      <p class="status" aria-live="polite" id="statusMsg"></p>
+      <p id="authHint" class="muted">Hint: Sign in to enable adding or seeding movies.</p>
+    </section>
+
+    <section aria-labelledby="list-title" class="movie-list card">
+      <h2 id="list-title">Movies (shared)</h2>
+      <ul id="list" role="list" class="list"></ul>
+      <template id="movieItemTemplate">
+        <li class="item" role="listitem">
+          <div class="poster" aria-hidden="true">🎬</div>
+          <div class="meta">
+            <h3 class="title"></h3>
+            <p class="sub">
+              <span class="year"></span> • <span class="genre"></span> • <span class="runtime"></span>
+            </p>
+          </div>
+          <div class="actions">
+            <label class="check-wrap">
+              <input type="checkbox" class="select" />
+              <span class="check-label">Select</span>
+            </label>
+          </div>
+        </li>
+      </template>
+    </section>
+
+    <aside aria-labelledby="selected-title" class="selected card">
+      <h2 id="selected-title">Your picks (private)</h2>
+      <p id="count" aria-live="polite">0 selected</p>
+      <ol id="selectedList" class="selected-list"></ol>
+    </aside>
+
+    <section aria-labelledby="add-title" class="add card">
+      <h2 id="add-title">Add a movie (shared)</h2>
+      <form id="addForm" class="add-form" aria-describedby="addHelp">
+        <div class="field">
+          <label for="title">Title</label>
+          <input id="title" name="title" required placeholder="e.g., Spirited Away" />
+        </div>
+        <div class="field">
+          <label for="year">Year</label>
+          <input id="year" name="year" type="number" min="1900" max="2100" required placeholder="2001" />
+        </div>
+        <div class="field">
+          <label for="genreInput">Genre</label>
+          <input id="genreInput" name="genreInput" required placeholder="Animation" />
+        </div>
+        <div class="field">
+          <label for="runtime">Runtime (min)</label>
+          <input id="runtime" name="runtime" type="number" min="1" max="500" required placeholder="125" />
+        </div>
+        <button class="btn primary">Add</button>
+      </form>
+      <p id="addHelp" class="muted">You must be signed in to add movies to the shared list.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Made for the Movie Club • Keyboard friendly • Accessible • Firebase Auth + Firestore</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
